@@ -1,6 +1,6 @@
 Types::MatchupType = GraphQL::ObjectType.define do
-  name "Matchup"
-  description "A game between two NFL teams"
+  name 'Matchup'
+  description 'A game between two NFL teams'
 
   field :id, !types.ID
   field :game_time, !types.DateTime
