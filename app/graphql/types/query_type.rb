@@ -10,4 +10,12 @@ Types::QueryType = GraphQL::ObjectType.define do
       User.all
     }
   end
+
+  field :nflTeams, !types[Types::NflTeamType] do
+    description "Return all NFL Teams"
+    argument :limit, types.Int, default_value: 50, prepare: -> (limit, context) { [limit, 30].min }
+    resolve ->(obj, args, context) {
+      NflTeam.all
+    }
+  end
 end
