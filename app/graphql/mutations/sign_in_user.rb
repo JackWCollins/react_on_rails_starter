@@ -1,6 +1,7 @@
 class Mutations::SignInUser < GraphQL::Function
   # define the arguments that this field will receive
-  argument :email, !Types::AuthProviderEmailInput
+  argument :email, !types.String
+  argument :password, !types.String
 
   # define inline return type for the mutation
   type do
@@ -12,11 +13,11 @@ class Mutations::SignInUser < GraphQL::Function
 
   def call(obj, args, context)
     input = args[:email]
-    return unless input
+    return unless args.present?
 
-    user = User.find_by(email: input[:email])
+    user = User.find_by(email: args[:email])
     return unless user
-    return unless user.authenticate(input[:password])
+    return unless user.authenticate(args[:password])
 
     OpenStruct.new({
       token: AuthToken.token(user),

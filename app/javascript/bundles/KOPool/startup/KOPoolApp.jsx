@@ -1,5 +1,4 @@
 import React from 'react';
-import { Provider } from 'react-redux';
 import {
   BrowserRouter as Router,
   Route,
@@ -7,28 +6,41 @@ import {
   Switch,
   Redirect
 } from 'react-router-dom'
+import { ApolloProvider } from 'react-apollo';
+import { ApolloClient } from 'apollo-client';
+import { HttpLink } from 'apollo-link-http';
+import { ApolloLink } from 'apollo-client-preset'
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { AUTH_TOKEN } from "../constants/koPoolConstants";
+import { authService } from '../components/AuthService'
 
-import configureStore from '../store/koPoolStore';
-import KOPoolContainer from '../containers/KOPoolContainer';
-import LoginFormContainer from '../containers/LoginFormContainer'
-import RegisterFormContainer from '../containers/RegisterFormContainer'
+import KOPool from '../components/KOPool'
+import LoginForm from '../components/LoginForm'
+import RegisterForm from '../components/RegisterForm'
 
+const middlewareAuthLink = new ApolloLink((operation, forward) => {
+  const token = localStorage.getItem(AUTH_TOKEN);
+  const authorizationHeader = token ? `Bearer ${token}` : '';
+  operation.setContext({
+    headers: {
+      authorization: authorizationHeader
+    }
+  })
+  return forward(operation)
+});
 
-const fakeAuth = {
-  isAuthenticated: false,
-  authenticate(callback) {
-    this.isAuthenticated = true;
-    setTimeout(callback, 100) // fake async
-  },
-  signout(callback) {
-    this.isAuthenticated = false;
-    setTimeout(callback, 100)
-  }
-};
+const httpLinkWithAuthToken = middlewareAuthLink.concat(new HttpLink())
+
+const client = new ApolloClient({
+  // By default, this client will send queries to the
+  //  `/graphql` endpoint on the same host
+  link: httpLinkWithAuthToken,
+  cache: new InMemoryCache()
+});
 
 const PrivateRoute = ({ component: Component, ...rest}) => (
   <Route {...rest} render={(props) => (
-    fakeAuth.isAuthenticated === true ?
+    authService.isAuthenticated() === true ?
       <Component {...props} />
     :
       <Redirect to='/login' />
@@ -38,27 +50,23 @@ const PrivateRoute = ({ component: Component, ...rest}) => (
 const UnauthenticatedRoute = ({ component: Component, ...rest}) => (
   // Only allow users to go to this route if they aren't authenticated
   <Route {...rest} render={(props) => (
-    fakeAuth.isAuthenticated === true ?
+    authService.isAuthenticated() === true ?
       <Redirect to='/' />
       :
       <Component {...props} />
   )} />
 );
 
-// See documentation for https://github.com/reactjs/react-redux.
-// This is how you get props from the Rails view into the redux store.
-// This code here binds your smart component to the redux store.
 const KOPoolApp = (props) => (
-  <Provider store={configureStore(props)}>
+  <ApolloProvider client={client}>
     <Router>
       <Switch>
-        <PrivateRoute path="/" exact component={KOPoolContainer} />
-        <UnauthenticatedRoute path="/login" component={LoginFormContainer} />
-        <UnauthenticatedRoute path="/register" component={RegisterFormContainer} />
+        <PrivateRoute path="/" exact component={KOPool} />
+        <UnauthenticatedRoute path="/login" component={LoginForm} />
+        <UnauthenticatedRoute path="/register" component={RegisterForm} />
       </Switch>
     </Router>
-    {/*<KOPoolContainer />*/}
-  </Provider>
+  </ApolloProvider>
 );
 
 export default KOPoolApp;

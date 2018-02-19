@@ -11,7 +11,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch => {
   return {
     onLoginSubmit: (loginParams) => {
-      console.log("In onLoginSubmit within Login Form Container: ", loginParams);
       dispatch(actions.login(loginParams))
     }
   }
