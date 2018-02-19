@@ -61,9 +61,9 @@ const KOPoolApp = (props) => (
   <ApolloProvider client={client}>
     <Router>
       <Switch>
-        <PrivateRoute path="/" exact component={KOPool} />
-        <UnauthenticatedRoute path="/login" component={LoginForm} />
-        <UnauthenticatedRoute path="/register" component={RegisterForm} />
+        <UnauthenticatedRoute path="/login" exact component={LoginForm} />
+        <UnauthenticatedRoute path="/register" exact component={RegisterForm} />
+        <PrivateRoute path="/" component={KOPool} />
       </Switch>
     </Router>
   </ApolloProvider>

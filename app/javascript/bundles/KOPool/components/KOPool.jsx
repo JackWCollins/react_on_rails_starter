@@ -1,8 +1,16 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Button } from 'semantic-ui-react'
-import FixedMenuLayout from './FixedMenuLayout'
-import { BrowserRouter } from 'react-router-dom'
+import { Container, Divider, Dropdown, Grid, Header, Image, List, Menu, Segment } from 'semantic-ui-react'
+import Home from './Home'
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch,
+  Redirect
+} from 'react-router-dom'
+import { NavBar } from "./NavBar";
+import { UserProfile } from "./UserProfile";
 
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
@@ -22,30 +30,40 @@ class KOPool extends React.Component {
   };
 
   componentDidMount() {
-    console.log("Mounted main KO Pool App")
+
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      season: this.props.season
-    };
-  };
-
-  updateSeason = (season) => {
-    this.setState({ season });
-  };
+  // constructor(props) {
+  //   super(props);
+  //
+  //   this.state = {
+  //     season: this.props.season
+  //   };
+  // };
 
   render() {
-    // if (this.props.nflTeamsQuery && this.props.nflTeamsQuery.loading) {
-    //   return '<div>Loading</div>'
-    // }
-
-    const nflTeams = this.props.nflTeamsQuery.nfl_teams;
+    // const nflTeams = this.props.nflTeamsQuery.nfl_teams;
 
     return (
-      <FixedMenuLayout />
+      <div>
+        <NavBar></NavBar>
+        <Container text style={{ marginTop: '7em' }}>
+          <Route path="/" exact component={Home} />
+          <Route path="/profile" component={UserProfile} />
+        </Container>
+        <Segment
+          inverted
+          vertical
+          style={{ margin: '5em 0em 0em', padding: '5em 0em' }}
+        >
+          <Container textAlign='center'>
+            <List horizontal inverted divided link>
+              <List.Item as='a' href='#'>Contact Us</List.Item>
+              <List.Item as='a' href='#'>Terms and Conditions</List.Item>
+            </List>
+          </Container>
+        </Segment>
+      </div>
     );
   }
 }
