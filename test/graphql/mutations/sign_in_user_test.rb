@@ -11,10 +11,10 @@ class Mutations::SignInUserTest < ActiveSupport::TestCase
 
   test 'creates a token on successful sign in' do
     result = perform(
-      email: {
+      # email: {
         email: @user.email,
         password: 'jack_password'
-      }
+      # }
     )
 
     assert result.present?

@@ -1,32 +1,11 @@
 import React from 'react'
 import { Container, Divider, Dropdown, Grid, Header, Image, List, Menu, Segment } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
+import { NavBar } from "./NavBar";
 
 const FixedMenuLayout = () => (
   <div>
-    <Menu fixed='top' inverted>
-      <Container>
-        <Menu.Item as='a' header>
-          <Image
-            size='mini'
-            src=''
-            style={{ marginRight: '1.5em' }}
-          />
-          KO Pool
-        </Menu.Item>
-
-        <Dropdown item simple text='Dropdown'>
-          <Dropdown.Menu>
-            <Dropdown.Item>Profile</Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item>Picks</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-        <Menu.Item>
-          <Link to='/login'>Login</Link>
-        </Menu.Item>
-      </Container>
-    </Menu>
+    <NavBar />
 
     <Container text style={{ marginTop: '7em' }}>
       <Header as='h1'>Welcome to KO Pool 2018</Header>

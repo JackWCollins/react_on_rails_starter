@@ -4,17 +4,32 @@ import { Button } from 'semantic-ui-react'
 import FixedMenuLayout from './FixedMenuLayout'
 import { BrowserRouter } from 'react-router-dom'
 
-export default class KOPool extends React.Component {
+import { graphql } from 'react-apollo'
+import gql from 'graphql-tag'
+
+const NFL_TEAMS_QUERY = gql`
+  query NflTeamsQuery {
+    nflTeams {
+      id
+      name
+    }
+  }
+`;
+
+class KOPool extends React.Component {
   static propTypes = {
     season: PropTypes.string
+  };
+
+  componentDidMount() {
+    console.log("Mounted main KO Pool App")
   };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      season: this.props.season,
-      smallLogoPath: this.props.small_logo_path
+      season: this.props.season
     };
   };
 
@@ -23,8 +38,16 @@ export default class KOPool extends React.Component {
   };
 
   render() {
+    // if (this.props.nflTeamsQuery && this.props.nflTeamsQuery.loading) {
+    //   return '<div>Loading</div>'
+    // }
+
+    const nflTeams = this.props.nflTeamsQuery.nfl_teams;
+
     return (
-      <FixedMenuLayout smallLogoPath={this.props.small_logo_path}/>
+      <FixedMenuLayout />
     );
   }
 }
+
+export default graphql(NFL_TEAMS_QUERY, {name: 'nflTeamsQuery'}) (KOPool)
