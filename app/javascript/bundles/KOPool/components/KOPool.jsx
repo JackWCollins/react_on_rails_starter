@@ -1,16 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Container, Divider, Dropdown, Grid, Header, Image, List, Menu, Segment } from 'semantic-ui-react'
+import { Container, Divider, Dropdown, Grid, List, Menu, Segment } from 'semantic-ui-react'
 import Home from './Home'
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Switch,
-  Redirect
-} from 'react-router-dom'
+import { Route, Link } from 'react-router-dom'
 import { NavBar } from "./NavBar";
 import { UserProfile } from "./UserProfile";
+import { Sidebar } from "./Sidebar"
 
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
@@ -47,9 +42,20 @@ class KOPool extends React.Component {
     return (
       <div>
         <NavBar></NavBar>
-        <Container text style={{ marginTop: '7em' }}>
-          <Route path="/" exact component={Home} />
-          <Route path="/profile" component={UserProfile} />
+        <Container style={{ marginTop: '7em' }}>
+          <Grid>
+            <Grid.Row>
+              <Grid.Column width={2}>
+                <Sidebar />
+              </Grid.Column>
+              <Grid.Column width={14}>
+                <Container text>
+                  <Route path="/" exact component={Home} />
+                  <Route path="/profile" component={UserProfile} />
+                </Container>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </Container>
         <Segment
           inverted
