@@ -18,29 +18,25 @@ export class NavBar extends React.Component {
   render() {
     if (this.state.shouldRedirect) {
       return (
-        <Redirect to="/login" />
+        <Redirect to="/" />
       )
     } else {
       return (
         <Menu fixed='top' inverted>
           <Container>
-            <Menu.Item as='a' header>
+            <Menu.Item header>
               <Image
                 size='mini'
                 src=''
                 style={{ marginRight: '1.5em' }}
               />
-              KO Pool
+              <Link to="/">KO Pool</Link>
             </Menu.Item>
 
-            <Dropdown item simple text='Dropdown'>
-              <Dropdown.Menu>
-                <Dropdown.Item>Profile</Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item>Picks</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-            <Menu.Item onClick={this.onLogoutClick}>
+            <Menu.Item>
+              <Link to="/profile" >Profile</Link>
+            </Menu.Item>
+            <Menu.Item onClick={this.onLogoutClick} position='right'>
               Logout
             </Menu.Item>
           </Container>
