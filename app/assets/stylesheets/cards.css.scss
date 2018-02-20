@@ -1,0 +1,41 @@
+@import 'colors';
+@import 'mixins';
+
+.ui.card {
+  .won {
+    color: $white;
+    background-color: $green;
+  }
+  .lost {
+    color: $white;
+    background-color: $red;
+  }
+  .pending {
+    color: $white;
+    background-color: $blue;
+  }
+}
+
+.ui.container {
+  .week-results, .team-picks {
+    .item {
+      border: 1px solid $grey;
+      margin: 10px 0px;
+      .matchup-details {
+        font-size: 16px;
+        font-style: italic;
+      }
+      .picked-team-result {
+        &.won {
+          color: $green;
+        }
+        &.lost {
+          color: $red;
+        }
+        &.pending {
+          color: $blue;
+        }
+      }
+    }
+  }
+}
