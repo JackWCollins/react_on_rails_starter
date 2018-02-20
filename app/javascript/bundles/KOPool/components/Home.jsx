@@ -50,7 +50,7 @@ class Home extends React.Component {
                 35 picks this week
               </a>
             </Card.Content>
-            <Card.Content extra style={{backgroundColor: '#3ADF00', color: '#F2F2F2'}}>
+            <Card.Content extra className="won">
               Won
             </Card.Content>
           </Card>
@@ -76,7 +76,7 @@ class Home extends React.Component {
                 12 picks this week
               </a>
             </Card.Content>
-            <Card.Content extra style={{backgroundColor: '#B03060', color: '#F2F2F2'}}>
+            <Card.Content extra className="lost">
               Knocked Out
             </Card.Content>
           </Card>
@@ -102,7 +102,7 @@ class Home extends React.Component {
                 25 picks this week
               </a>
             </Card.Content>
-            <Card.Content extra style={{backgroundColor: '#F4FA58', color: '#424242'}}>
+            <Card.Content extra className="pending">
               In Play
             </Card.Content>
           </Card>

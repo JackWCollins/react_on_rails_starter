@@ -6,6 +6,8 @@ import { Route, Link } from 'react-router-dom'
 import { NavBar } from "./NavBar";
 import { UserProfile } from "./UserProfile";
 import { Sidebar } from "./Sidebar"
+import { WeekSummary } from "./WeekSummary"
+import { WeekTeamSummary } from "./WeekTeamSummary"
 
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
@@ -51,7 +53,9 @@ class KOPool extends React.Component {
               <Grid.Column width={14}>
                 <Container text>
                   <Route path="/" exact component={Home} />
-                  <Route path="/profile" component={UserProfile} />
+                  <Route path="/profile" exact component={UserProfile} />
+                  <Route path="/week_summary" exact component={WeekSummary} />
+                  <Route path="/week_summary/:team_id" component={WeekTeamSummary} />
                 </Container>
               </Grid.Column>
             </Grid.Row>
