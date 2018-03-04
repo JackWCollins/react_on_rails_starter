@@ -1,24 +1,15 @@
-# README
+# React on Rails Starter
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Feel free to use this repo as a way to start a new project with: 
 
-Things you may want to cover:
+* Rails 5.2
+* `react_on_rails` gem using webpacker
+* React.js with React Router V4
+* `jwt` gem for Javascript Web Token authorization
+* Apollo and GraphQL
 
-* Ruby version
+The repo has a basic `AuthService` on the React side to handle authentication. To set this up on the server, run the following command to generate a `users` table:
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```ruby
+rails g migration users email:string name:string authentication_token:string password_digest:string 
+```
